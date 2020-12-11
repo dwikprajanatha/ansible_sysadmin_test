@@ -6,11 +6,18 @@
 
   tasks:
     - name: "Install dan update apt"
-      shell: sudo apt-get update
+      shell: name={{ item }} state=latest force_apt_get=yes
+      loop:
+        - aptitude
 
     - name: "install apache, mysql, php"
-      apt: name={{item}} state=latest
-      loop: ['apache2', 'mysql-server', 'php', 'php-mysql', 'libapache2-mod-php']
+      apt: name={{ item }} state=latest
+      loop:
+        - apache2
+        - mysql-server
+        - php
+        - php-mysql
+        - libapache2-mod-php
 
     - name: "buat document root html"
       file:
@@ -22,11 +29,11 @@
     - name: "konfigurasi virtual host apache"
       template:
         src: "files/apache.conf.j2"
-        dest: "/etc/apache2/sites-available/{{http_conf}}"
+        dest: "/etc/apache2/sites-available/{{ http_conf }}"
       notify: Reload Apache2
 
     - name: "enable site"
-      shell: /usr/sbin/a2ensite {{http_conf}}
+      shell: /usr/sbin/a2ensite {{ http_conf }}
       notify: reload Apache2
 
     - name: "disable default site"
@@ -37,7 +44,7 @@
     - name: "set root password"
       mysql_user:
         name: root
-        password: "{{mysql_root_password}}"
+        password: "{{ mysql_root_password }}"
         login_unix_socket: /var/run/mysqld/mysqld.sock
 
     - name: Removes all anonymous user accounts
@@ -46,12 +53,12 @@
         host_all: yes
         state: absent
         login_user: root
-        login_password: "{{mysql_root_password}}"
+        login_password: "{{ mysql_root_password }}"
 
-    - name: "UFW - Allow HTTP on port {{http_port}}"
+    - name: "UFW - Allow HTTP on port {{ http_port }}"
       ufw:
         rule: allow
-        port: "{{http_port}}"
+        port: "{{ http_port }}"
         proto: tcp
 
   handlers:
