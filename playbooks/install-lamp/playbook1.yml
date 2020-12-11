@@ -20,6 +20,12 @@
         - libapache2-mod-php
         - python3-pymysql
 
+    - name: "start services apache mysql"
+      service: "name={{ item }} state=started enabled=yes"
+      loop:
+        - apache2
+        - mysql
+
     - name: "buat document root html"
       file:
         path: "/var/www/{{http_host}}"
