@@ -1,0 +1,7 @@
+---
+mysql_root_password: "dwikdwik"
+user: "dwik"
+http_host: "sysadmin.com"
+http_conf: "sysadmin.com.conf"
+http_port: "80"
+disable_default: true
