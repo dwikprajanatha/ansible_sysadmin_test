@@ -6,11 +6,10 @@
 
   tasks:
     - name: "Install dan update apt"
-      apt: name={{item}} update_cache=yes state=latest force_apt_get=yes
-      loop: [ 'aptitude' ]
+      shell: sudo apt-get update
 
     - name: "install apache, mysql, php"
-      apt: name={{loop}} update_cache=yes state=latest
+      apt: name={{item}} state=latest
       loop: ['apache2', 'mysql-server', 'php', 'php-mysql', 'libapache2-mod-php']
 
     - name: "buat document root html"
