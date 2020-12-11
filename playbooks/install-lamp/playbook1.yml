@@ -6,12 +6,12 @@
 
   tasks:
     - name: "Install dan update apt"
-      shell: name={{ item }} state=latest force_apt_get=yes
+      shell: "name={{ item }} state=latest force_apt_get=yes"
       loop:
         - aptitude
 
     - name: "install apache, mysql, php"
-      apt: name={{ item }} state=latest
+      apt: "name={{ item }} state=latest"
       loop:
         - apache2
         - mysql-server
@@ -34,12 +34,12 @@
 
     - name: "enable site"
       shell: /usr/sbin/a2ensite {{ http_conf }}
-      notify: reload Apache2
+      notify: Reload Apache2
 
     - name: "disable default site"
       shell: /usr/sbin/a2dissite 000-default.conf
       when: disable_default
-      notify: reload Apache2
+      notify: Reload Apache2
 
     - name: "set root password"
       mysql_user:
