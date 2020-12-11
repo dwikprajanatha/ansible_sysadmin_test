@@ -18,6 +18,7 @@
         - php
         - php-mysql
         - libapache2-mod-php
+        - python3-pymysql
 
     - name: "buat document root html"
       file:
@@ -43,6 +44,9 @@
 
     - name: "set root password"
       mysql_user:
+        login_host: "localhost"
+        login_user: "root"
+        login_password: ""
         name: root
         password: "{{ mysql_root_password }}"
         login_unix_socket: /var/run/mysqld/mysqld.sock
@@ -51,8 +55,9 @@
       mysql_user:
         name: ''
         host_all: yes
-        state: absent
-        login_user: root
+        state: "absent"
+        login_host: "localhost"
+        login_user: "root"
         login_password: "{{ mysql_root_password }}"
 
     - name: "UFW - Allow HTTP on port {{ http_port }}"
