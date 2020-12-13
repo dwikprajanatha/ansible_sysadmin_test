@@ -1,0 +1,19 @@
+---
+- hosts: webservers
+  become: true
+  vars_files:
+    - vars/variables.yml
+
+  tasks:
+    - name: "Install dan update apt"
+      shell: "name={{ item }} state=latest force_apt_get=yes"
+      loop:
+        - aptitude
+
+    - name: "install php"
+      apt: "name={{ item }} state=latest"
+      loop:
+        - php
+        - php-mysql
+        - libapache2-mod-php
+        - python3-pymysql

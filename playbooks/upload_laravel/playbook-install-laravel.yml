@@ -1,0 +1,45 @@
+---
+- hosts: webservers
+  become: true
+  vars_files:
+    - vars/variables.yml
+
+  tasks:
+    # - name : "Ambil project dari github"
+    #   git:
+    #     repo: ""
+    #     dest: "{{ working_directory }}"
+    #     version: master
+    #     accept_hostkey: yes
+    #   register: repo
+
+    - name: "download laravel project and extract"
+      unarchive:
+        src: "{{ link_download }}"
+        dest: "{{ working_directory }}"
+        remote_src: yes
+
+    - name: "remove .env"
+      file:
+        path: "{{ working_directory }}/.env"
+        state: absent
+    
+    - name: "create new .env"
+      template:
+        src: "template/.env.j2"
+        dest: "{{ working_directory }}/.env"
+
+    - name: "php artisan config cache"
+      shell:
+        cmd: "php artisan config:cache"
+        chdir: "{{ working_directory }}"
+    
+    - name: "php clear the view cache"
+      shell:
+        cmd: "php artisan view:clear"
+        chdir: "{{ working_directory }}"
+
+    # - name: "php migration"
+    #   shell:
+    #     cmd: "php artisan migrate --force"
+    #     chdir: "{{ working_directory }}"

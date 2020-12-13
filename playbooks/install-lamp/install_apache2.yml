@@ -1,0 +1,55 @@
+---
+- hosts: webservers
+  become: true
+  vars_files:
+    - vars/variables.yml
+
+  tasks:
+    - name: "Install dan update apt"
+      shell: "name={{ item }} state=latest force_apt_get=yes"
+      loop:
+        - aptitude
+
+    - name: "install apache"
+      apt: "name={{ item }} state=latest"
+      loop:
+        - apache2
+
+    - name: "buat document root html"
+      file:
+        path: "/var/www/{{http_host}}"
+        state: directory
+        owner: "www-data"
+        mode: '0755'
+
+    - name: "konfigurasi virtual host apache"
+      template:
+        src: "files/apache.conf.j2"
+        dest: "/etc/apache2/sites-available/{{ http_conf }}"
+      notify: Reload Apache2
+
+    - name: "enable site"
+      shell: /usr/sbin/a2ensite {{ http_conf }}
+      notify: Reload Apache2
+
+    - name: "disable default site"
+      shell: /usr/sbin/a2dissite 000-default.conf
+      when: disable_default
+      notify: Reload Apache2
+
+    - name: "UFW - Allow HTTP on port {{ http_port }}"
+      ufw:
+        rule: allow
+        port: "{{ http_port }}"
+        proto: tcp
+
+  handlers:
+    - name: Reload Apache2
+      service:
+        name: apache2
+        state: reloaded
+
+    - name: Restart Apache2
+      service:
+        name: apache2
+        state: restarted
