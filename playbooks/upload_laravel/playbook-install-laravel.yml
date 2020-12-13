@@ -5,10 +5,16 @@
     - vars/variables.yml
 
   tasks:
+    - name: "download laravel"
+      get_url:
+        url: "{{ link_download }}"
+        dest: "{{ download_directory }}"
+      register: downloaded_file
 
-    - name: "download laravel project and extract"
+
+    - name: "extract laravel project"
       unarchive:
-        src: "{{ link_download }}"
+        src: "{{ downloaded_file.dest }}"
         dest: "{{ working_directory }}"
         remote_src: yes
 
