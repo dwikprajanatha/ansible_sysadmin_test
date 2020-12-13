@@ -12,14 +12,8 @@
         - mysql
 
     - name: "create new database"
-      comunity.mysql.mysql_db:
+      community.mysql.mysql_db:
         login_user: "{{ user_db }}"
         login_password: "{{ password_db }}"
         name: "{{ nama_db }}"
         state: present
-    
-    - name: "php migration"
-      shell:
-        cmd: "php artisan migrate --force"
-        chdir: "{{ working_directory }}"
-    

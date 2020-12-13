@@ -5,13 +5,6 @@
     - vars/variables.yml
 
   tasks:
-    # - name : "Ambil project dari github"
-    #   git:
-    #     repo: ""
-    #     dest: "{{ working_directory }}"
-    #     version: master
-    #     accept_hostkey: yes
-    #   register: repo
 
     - name: "download laravel project and extract"
       unarchive:
@@ -38,8 +31,3 @@
       shell:
         cmd: "php artisan view:clear"
         chdir: "{{ working_directory }}"
-
-    # - name: "php migration"
-    #   shell:
-    #     cmd: "php artisan migrate --force"
-    #     chdir: "{{ working_directory }}"
