@@ -22,8 +22,11 @@
         dest: "{{ download_directory }}sistemKoperasi.zip"
 
     - name: "install unzip"
-      apt: "item=unzip state=latest"
-      
+      apt:
+        name: unzip
+        state: latest
+        update_cache: yes
+
     - name: "extract laravel project"
       unarchive:
         src: "{{ download_directory }}sistemKoperasi.zip"
