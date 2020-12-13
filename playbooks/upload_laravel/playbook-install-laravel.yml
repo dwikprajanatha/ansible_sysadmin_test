@@ -5,15 +5,16 @@
     - vars/variables.yml
 
   tasks:
-    # - name: "download laravel"
-    #   get_url:
-    #     url: "{{ link_download }}"
-    #     dest: "{{ download_directory }}/sistemKoperasi.zip"
-    #   register: downloaded_file
-    - name: "download laravel project"
-      shell:
-        cmd: "wget {{ link_download }}"
-        chdir: "{{ download_directory }}"
+    - name: "download laravel"
+      get_url:
+        url: "{{ link_download }}"
+        dest: "{{ download_directory }}"
+      register: downloaded_file
+
+    # - name: "download laravel project"
+    #   shell:
+    #     cmd: "wget {{ link_download }}"
+    #     chdir: "{{ download_directory }}"
 
     - name: "extract laravel project"
       unarchive:
