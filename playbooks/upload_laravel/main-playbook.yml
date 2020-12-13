@@ -1,0 +1,4 @@
+---
+- import_playbook: playbook-install-laravel.yml
+- import_playbook: playbook-config-mysql.yml
+- import_playbook: playbook-php-migrate.yml
