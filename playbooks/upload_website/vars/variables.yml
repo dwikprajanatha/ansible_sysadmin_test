@@ -1,0 +1,9 @@
+---
+working_directory: "/var/www/html/gianyarkab/"
+download_directory: "/home/dwik/"
+link_website: "https://gianyarkab.com"
+nama_db: "db_gianyar_kab"
+user_db: "root"
+password_db: "dwikdwik"
+link_github: "https://github.com/cekingx/gianyarkab"
+branch_github: "development"

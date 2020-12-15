@@ -25,7 +25,7 @@
 
     - name: "konfigurasi virtual host apache"
       template:
-        src: "files/apache.conf.j2"
+        src: "files/gianyarkab.conf.j2"
         dest: "/etc/apache2/sites-available/{{ http_conf }}"
       notify: Reload Apache2
 

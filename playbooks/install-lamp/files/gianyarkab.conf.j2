@@ -1,0 +1,16 @@
+<VirtualHost *:80>
+    ServerAdmin admin@gianyarkab.com
+    ServerName gianyarkab.com
+    DocumentRoot /var/www/html/gianyarkab
+    ErrorLog /var/log/codeigniter_error.log
+    CustomLog /var/log/codeigniter_access.log combined
+
+    <Directory /var/www/html/gianyarkab>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+        Order allow,deny
+        allow from all
+    </Directory> 
+
+</VirtualHost>

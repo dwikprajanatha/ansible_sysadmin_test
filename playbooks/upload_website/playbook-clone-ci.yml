@@ -1,0 +1,32 @@
+---
+
+- hosts: webservers
+  become: true
+  vars_files:
+    - vars/variables.yml
+
+  tasks:
+    - name: "clone github"
+      git:
+        repo: "{{ link_github }}"
+        dest: "{{ working_directory }}"
+        version: "{{ branch_github }}"
+        clone: yes
+
+    - name: "setting config.php"
+      template:
+        src: /template/config.php.j2
+        dest: "{{ working_directory }}application/config/config.php"
+
+    - name: "setting database.php"
+      template:
+        src: /template/database.php.j2
+        dest: "{{ working_directory }}application/config/database.php"
+
+    - name: "change permission, owner, dan group"
+      file:
+        path: "{{ working_directory }}"
+        state: directory
+        recurse: yes
+        owner: www-data
+        group: www-data

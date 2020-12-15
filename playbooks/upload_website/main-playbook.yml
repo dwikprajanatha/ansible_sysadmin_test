@@ -1,0 +1,3 @@
+---
+- import_playbook: playbook-clone-ci.yml
+- import_playbook: playbook-config-mysql.yml

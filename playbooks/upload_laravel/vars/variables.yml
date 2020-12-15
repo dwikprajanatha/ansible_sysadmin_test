@@ -1,9 +1,0 @@
----
-github_username: "dwikprajanatha"
-github_access_token: "aa455509a9c372a1111c536f40c3a6ee1b9a2fe7"
-working_directory: "/var/www/html/sysadmin.com/"
-download_directory: "/home/dwik/"
-nama_db: "db_koperasi"
-user_db: "root"
-password_db: "dwikdwik"
-link_download: "https://anonymousfiles.io/f/sistemKoperasi.zip"

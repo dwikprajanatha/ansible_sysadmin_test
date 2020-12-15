@@ -1,0 +1,60 @@
+---
+- hosts: webservers
+  become: true
+  vars_files:
+    - vars/variables.yml
+
+  tasks:
+    # - name: "download laravel"
+    #   get_url:
+    #     url: "{{ link_download }}"
+    #     dest: "{{ download_directory }}"
+    #   register: downloaded_file
+
+    # - name: "download laravel project"
+    #   shell:
+    #     cmd: "wget {{ link_download }}"
+    #     chdir: "{{ download_directory }}"
+
+    - name: "get laravel"
+      copy:
+        src: files/sistemKoperasi.zip
+        dest: "{{ download_directory }}sistemKoperasi.zip"
+
+    - name: "install unzip"
+      apt:
+        name: unzip
+        state: latest
+        update_cache: yes
+
+    - name: "extract laravel project"
+      unarchive:
+        src: "{{ download_directory }}sistemKoperasi.zip"
+        dest: "{{ working_directory }}"
+        owner: "www-data"
+        group: "www-data"
+        mode: '0755'
+        remote_src: yes
+
+    - name: "remove .env"
+      file:
+        path: "{{ working_directory }}/.env"
+        state: absent
+    
+    - name: "create new .env"
+      template:
+        src: "template/.env.j2"
+        dest: "{{ working_directory }}/.env"
+        owner: "www-data"
+        group: "www-data"
+        mode: '0755'
+
+    - name: "php artisan config cache"
+      shell:
+        cmd: "php artisan config:cache"
+        chdir: "{{ working_directory }}"
+    
+    - name: "php clear the view cache"
+      shell:
+        cmd: "php artisan view:clear"
+        chdir: "{{ working_directory }}"
