@@ -6,14 +6,13 @@
 
   tasks:
     - name: "Install dan update apt"
-      shell: "name={{ item }} state=latest force_apt_get=yes"
-      loop:
-        - aptitude
+      shell: "sudo apt-get update"
 
     - name: "install mysql"
       apt: "name={{ item }} state=latest"
       loop:
         - mysql-server
+        - python3-pymysql
 
     - name: "start services mysql"
       service: "name={{ item }} state=started enabled=yes"
