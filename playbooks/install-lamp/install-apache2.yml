@@ -6,7 +6,7 @@
 
   tasks:
     - name: "Install dan update apt"
-      shell: "name={{ item }} state=latest force_apt_get=yes"
+      apt: "name={{ item }} state=latest force_apt_get=yes update_cache=yes"
       loop:
         - aptitude
 
