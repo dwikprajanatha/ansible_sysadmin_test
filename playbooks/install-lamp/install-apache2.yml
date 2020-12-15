@@ -5,10 +5,9 @@
     - vars/variables.yml
 
   tasks:
-    - name: "Install dan update apt"
-      apt: "name={{ item }} state=latest force_apt_get=yes update_cache=yes"
-      loop:
-        - aptitude
+    - name: "update apt"
+      shell: "apt-get update"
+      become: yes
 
     - name: "install apache"
       apt: "name={{ item }} state=latest"
