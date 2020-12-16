@@ -30,3 +30,13 @@
         recurse: yes
         owner: www-data
         group: www-data
+
+    - name: "rewrite apache"
+      shell: "a2enmod rewrite"
+      notify: Restart Apache2
+
+- handlers:
+    - name: Restart Apache2
+      service:
+        name: apache2
+        state: restarted
