@@ -15,12 +15,12 @@
 
     - name: "setting config.php"
       template:
-        src: /template/config.php.j2
+        src: "template/config.php.j2"
         dest: "{{ working_directory }}application/config/config.php"
 
     - name: "setting database.php"
       template:
-        src: /template/database.php.j2
+        src: "template/database.php.j2"
         dest: "{{ working_directory }}application/config/database.php"
 
     - name: "change permission, owner, dan group"
