@@ -1,5 +1,5 @@
 ---
-- hosts: database_server
+- hosts: db_server
   become: true
   vars_files:
     - vars/variables.yml

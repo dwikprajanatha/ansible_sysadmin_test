@@ -1,6 +1,6 @@
 ---
 
-- hosts: database_server
+- hosts: db_server
   become: true
   vars_files:
     - vars/variables.yml
@@ -20,7 +20,7 @@
     
     - name: "copy sql db to node"
       copy:
-        src: /file/db_gianyarkab_new.sql
+        src: "file/db_gianyarkab_new.sql"
         dest: /tmp
 
     - name: "import database"
