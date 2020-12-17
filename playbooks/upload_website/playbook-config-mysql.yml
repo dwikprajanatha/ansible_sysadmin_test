@@ -17,7 +17,7 @@
         login_password: "{{ password_db }}"
         name: "{{ nama_db }}"
         state: present
-    
+
     - name: "copy sql db to node"
       copy:
         src: "file/db_gianyarkab_new.sql"
@@ -30,3 +30,13 @@
         target: /tmp/db_gianyarkab_new.sql
         login_user: "{{ user_db }}"
         login_password: "{{ password_db }}"
+
+     - name: "buat user untuk diakses web"
+       community.mysql.mysql_db:
+         state: present
+         name: "{{ new_user_db }}"
+         password: "{{ new_pass_db }}"
+         host: '%'
+         priv:
+           '{{ nama_db }}.*': 'ALL,GRANT'
+         
