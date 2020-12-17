@@ -1,0 +1,40 @@
+---
+  - host: dns_server
+    become: true
+    
+    tasks:
+      - name : "update apt"
+        shell: "apt-get update"
+        become: yes
+      
+      - name: "install bind9"
+        apt: "name={{ item }} state=latest"
+        loop:
+          - bind9
+          - bind9utils
+          - bind9-doc
+          - dnsutils
+
+      - name: "config named.conf"
+        template:
+          src: template/named.conf.local.j2
+          dest: /etc/bind/named.conf.local
+          force: yes
+      
+      - name: "buat forward.gianyarkab.com"
+        template:
+          src: template/forward.gianyarkab.com.j2
+          dest: /etc/bind/forward.gianyarkab.com
+          force: yes
+
+      - name: "buat reverse.gianyarkab.com"
+        template:
+          src: template/reverse.gianyarkab.com.j2
+          dest: /etc/bind/reverse.gianyarkab.com
+          force: yes
+
+      - name: "start bind9"
+        service:
+          name: bind9
+          state: started
+          enable: yes

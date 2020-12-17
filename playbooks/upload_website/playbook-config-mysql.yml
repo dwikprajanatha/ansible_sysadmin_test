@@ -27,16 +27,16 @@
       community.mysql.mysql_db:
         name: "{{ nama_db }}"
         state: import
-        target: /tmp/db_gianyarkab_new.sql
+        target: /tmp/db_gianyarkab_v1.sql
         login_user: "{{ user_db }}"
         login_password: "{{ password_db }}"
 
-     - name: "buat user untuk diakses web"
-       community.mysql.mysql_db:
-         state: present
-         name: "{{ new_user_db }}"
-         password: "{{ new_pass_db }}"
-         host: '%'
-         priv:
-           '{{ nama_db }}.*': 'ALL,GRANT'
+    - name: "buat user untuk diakses web"
+      community.mysql.mysql_user:
+        state: present
+        name: "{{ new_user_db }}"
+        password: "{{ new_pass_db }}"
+        host: '%'
+        priv:
+          'db_gianyar_kab.*': 'ALL,GRANT'
          

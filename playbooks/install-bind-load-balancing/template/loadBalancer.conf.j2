@@ -1,0 +1,19 @@
+
+upstream backend {
+        server 192.168.1.2;
+        server 192.168.1.3;
+    }
+	
+    server {
+        listen      80 default_server;
+        listen      [::]:80 default_server;
+        server_name gianyarkab.com;
+
+        location / {
+	        proxy_redirect      off;
+	        proxy_set_header    X-Real-IP $remote_addr;
+	        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+	        proxy_set_header    Host $http_host;
+		proxy_pass http://backend;
+	}
+}
