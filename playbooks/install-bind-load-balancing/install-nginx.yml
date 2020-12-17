@@ -1,19 +1,22 @@
 ---
+  - host: dns_server
+    become: true
+    
+    tasks:
+      - name: "update apt"
+        shell: "apt-get update"
+        become: yes
 
-  - name: "update apt"
-    shell: "apt-get update"
-    become: yes
+      - name: "install nginx"
+        apt: "name=nginx state=latest"
 
-  - name: "install nginx"
-    apt: "name=nginx state=latest"
+      - name: "buat config load balancer"
+        template:
+          src: template/loadBalancer.conf.j2
+          dest: /etc/nginx/conf.d/loadBalancer.conf
+          force: yes
 
-  - name: "buat config load balancer"
-    template:
-      src: template/loadBalancer.conf.j2
-      dest: /etc/nginx/conf.d/loadBalancer.conf
-      force: yes
-
-  - name: "restart nginx"
-    service:
-        name: nginx
-        state: restart
+      - name: "restart nginx"
+        service:
+            name: nginx
+            state: restart

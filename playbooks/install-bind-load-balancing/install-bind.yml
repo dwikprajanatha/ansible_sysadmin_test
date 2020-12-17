@@ -37,4 +37,4 @@
         service:
           name: bind9
           state: started
-          enable: yes
+          enabled: yes
