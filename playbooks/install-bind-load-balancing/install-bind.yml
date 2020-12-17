@@ -33,6 +33,18 @@
           dest: /etc/bind/reverse.gianyarkab.com
           force: yes
 
+    - name: "UFW - Allow HTTP on port 53 tcp"
+      ufw:
+        rule: allow
+        port: '53'
+        proto: tcp
+
+    - name: "UFW - Allow HTTP on port 53 udp"
+      ufw:
+        rule: allow
+        port: '53'
+        proto: udp
+
       - name: "start bind9"
         service:
           name: bind9
